@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Flask Web App</title>
+    <link rel='stylesheet' href='{{ url_for("static", filename="style.css") }}'>
+</head>
+<body>
+    <div class='container'>
+        <h1>Flask Web App</h1>
+        <input type='text' id='userInput' placeholder='Enter something...'>
+        <button onclick='sendData()'>Submit</button>
+        <p id='response'></p>
+    </div>
+    <script>
+        function sendData() {
+            let input = document.getElementById('userInput').value;
+            fetch('/process', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ inputData: input })
+            })
+            .then(response => response.json())
+            .then(data => document.getElementById('response').innerText = data.response);
+        }
+    </script>
+</body>
+</html>
